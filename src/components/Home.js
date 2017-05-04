@@ -5,8 +5,7 @@ var FileInput = require('react-file-input')
 var Maps = require('./Maps')
 var turfcentroid = require('@turf/centroid')
 require("../css/file-input.css")
-// Load Components
-// var MyMap = require('./Maps')
+
 
 
 var Home = React.createClass({
@@ -14,16 +13,17 @@ var Home = React.createClass({
         return {input: {}, output: {}}
     },
     addDownload: function(olddata) {
+
             var data = JSON.stringify(olddata);
             var blob = new Blob([data], {type: "application/json"});
             var url  = URL.createObjectURL(blob);
 
             var header = document.createElement('h4');
-            header.textContent = "3. Download updated geojson";
+            header.textContent = "3. Download updated GeoJSON file";
 
 
             var a = document.createElement('a');
-            a.download    = "polygons_to_point.json";
+            a.download    = "polygons_to_point.geojson";
             a.href        = url;
             a.textContent = "Click here to download";
             a.className += " custom-link" 
@@ -32,29 +32,17 @@ var Home = React.createClass({
             document.getElementById('download').appendChild(a);
     },
     makeChanges: function(olddata) {
-        console.log("My input for the graph", this.state.input)
-        // var olddata = this.state.backup
-        // console.log("This",this)
-        // console.log
         olddata.features.map(function(feature){
-         1   // console.log(feature)
             if (feature.geometry.type === 'Polygon') {
-                            // console.log('Polygon detected', feature);
-                            var centroid = turfcentroid(feature);
-                            var lon = centroid.geometry.coordinates[0];
-                            var lat = centroid.geometry.coordinates[1];
-                            feature.geometry.coordinates = [lon,lat]
-                            feature.geometry.type = "Point"
+                // console.log('Polygon detected', feature);
+                var centroid = turfcentroid(feature);
+                var lon = centroid.geometry.coordinates[0];
+                var lat = centroid.geometry.coordinates[1];
+                feature.geometry.coordinates = [lon,lat]
+                feature.geometry.type = "Point"
 
-            } else {
-                // console.log(feature)
             }
-
-        // this.updateOutput(olddata)
-
         })
-
-        console.log("Is it true",olddata==this.state.input)
 
         this.setState({
             input:this.state.input,
@@ -71,19 +59,16 @@ var Home = React.createClass({
 
 
         function onReaderLoad(event){
-                // console.log(event.target.result);
                 var obj = JSON.parse(event.target.result);
                 updateState(obj)
-                // alert_data(obj.name, obj.family);
         }
+
         // Update State
         var that = this
         function updateState(data) {
-           // console.log(data)
            that.setState({
                 input: data
            }, that.makeChanges(data)) 
-          // console.log(obj)
         }
 
     },
@@ -94,7 +79,7 @@ var Home = React.createClass({
                 <nav className="navbar navbar-default">
                   <div className="container-fluid">
                     <div className="navbar-header">
-                      <a className="navbar-brand" href="#">Polygons to Points - A simple tool.</a>
+                      <a className="navbar-brand" href="#">GeoJSON Polygons to Points Converter</a>
                     </div>
                   </div>
                 </nav>       
