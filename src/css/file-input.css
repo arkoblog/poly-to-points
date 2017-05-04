@@ -1,0 +1,48 @@
+* {
+	font-family: "Open Sans"
+}
+.file-input {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+
+.file-input + label {
+	font-weight: 300;
+	width:100%;
+	padding: 5px;
+    color: white;
+    background-color: #14bebe;
+    display: inline-block;
+    text-align: center;
+}
+
+.file-input:focus + label,
+.file-input + label:hover {
+    background-color: #cccccc;
+}
+
+.file-input + label {
+	cursor: pointer; /* "hand" cursor */
+}
+
+#download {
+	/*margin:15px;*/
+	margin-top:10px;
+	padding:5px;
+	background-color: #ffb31b;
+	text-align: center;
+	/*font-weight: 800;*/
+}
+
+#download a {
+	padding:10px;
+	color:white;
+}
+
+custom-link:link {
+    background-color: yellow;
+}
